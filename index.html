@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <div class="container" id="search" @click="clickOutside">
+        <h1 class="display-4 row justify-content-center">
+            <span class="search-title">Search</span>
+        </h1>
+        <div class="search-with-suggestion">
+            <div class="input-group mb-3">
+                <input
+                    @keyup.enter="bringSelectedSuggestion"
+                    @keyup.down="selectingDown"
+                    @keyup.up="selectingUp"
+                    @keyup.delete="textDeleted"
+                    v-on:keyup="searchTextTyped"
+                    v-model="searchText" type="text" class="form-control" placeholder="Search"
+                    aria-label="Search" aria-describedby="search-addon">
+                <div class="input-group-append">
+                    <button @click="showSuggestions" class="btn btn-outline-secondary" type="button" id="search-addon">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <ul  class="list-group suggestion-list">
+                <li v-show="fetchingSuggestions" class="list-group-item">
+                    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                </li>
+
+                <li
+                    v-for="(item, index) in suggestions"
+                    class="list-group-item suggested-item"
+                    v-bind:class="{active: isActive(index)}"
+                    @click="selectingClick">
+                    {{item}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="./index.js"></script>
+</body>
+</html>
